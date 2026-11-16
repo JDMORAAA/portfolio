@@ -8,7 +8,7 @@
 <meta property="og:title" content="J. David Mora · Editor de video">
 <meta property="og:description" content="Documentales de eventos, podcasts, vlogs, reels y TikToks.">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#0b2270">
+<meta name="theme-color" content="#05123b">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2307090d'/%3E%3Ctext x='16' y='23' font-family='Arial' font-size='20' font-weight='700' text-anchor='middle' fill='%232f5bf0'%3EM%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,9 +17,9 @@
   /* Layout: fondo en degradado de azul rey (arriba) a negro (abajo), portada con un título grande, proyectos por categoría con marcos que respetan la proporción real de cada formato, contacto con formulario. */
   :root {
     --bg: #07090d;
-    --blue-1: #1239a6;
-    --blue-2: #0b2270;
-    --blue-3: #07112f;
+    --blue-1: #081c5c;
+    --blue-2: #05123b;
+    --blue-3: #030a20;
     --surface: rgba(7, 9, 13, 0.5);
     --surface-2: #131926;
     --line: rgba(233, 236, 243, 0.14);
@@ -27,6 +27,7 @@
     --muted: #aab3c8;
     --accent: #2f5bf0;
     --accent-text: #9db3ff;
+    --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
     --font-body: "Manrope", "Helvetica Neue", Arial, sans-serif;
     --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
@@ -39,6 +40,7 @@
 
   body {
     margin: 0;
+    position: relative;
     min-height: 100vh;
     background-color: var(--bg);
     background-image: linear-gradient(180deg, var(--blue-1) 0%, var(--blue-2) 22%, var(--blue-3) 48%, var(--bg) 80%);
@@ -51,12 +53,30 @@
     -webkit-text-size-adjust: 100%;
   }
 
+  /* Textura: grano fino sobre todo el degradado y ondas azules difuminadas que se desvanecen hacia el negro */
+  body::before {
+    content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background-image: var(--grain); background-size: 260px 260px;
+    mix-blend-mode: overlay; opacity: 0.28;
+  }
+  .waves {
+    position: absolute; top: 0; left: 0; width: 100%; height: 1500px; z-index: 0; pointer-events: none;
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 50%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 0%, #000 50%, transparent 100%);
+  }
+  .waves svg { display: block; width: 100%; height: 100%; }
+  .waves::after {
+    content: ""; position: absolute; inset: 0;
+    background-image: var(--grain); background-size: 260px 260px;
+    mix-blend-mode: overlay; opacity: 0.4;
+  }
+
   img { max-width: 100%; }
   [hidden] { display: none !important; }
   a { color: inherit; }
   :focus-visible { outline: 2px solid var(--accent-text); outline-offset: 3px; border-radius: 4px; }
 
-  .wrap { max-width: 1120px; margin: 0 auto; }
+  .wrap { max-width: 1120px; margin: 0 auto; position: relative; z-index: 1; }
 
   /* Header */
   .top {
@@ -263,6 +283,26 @@
 </style>
 </head>
 <body>
+<div class="waves" aria-hidden="true">
+  <svg viewBox="0 0 1440 1500" preserveAspectRatio="xMidYMin slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="w-soft" filterUnits="userSpaceOnUse" x="-400" y="-400" width="2240" height="2300"><feGaussianBlur stdDeviation="46"/></filter>
+      <filter id="w-ribbon" filterUnits="userSpaceOnUse" x="-400" y="-400" width="2240" height="2300"><feGaussianBlur stdDeviation="12"/></filter>
+    </defs>
+    <g filter="url(#w-soft)">
+      <path d="M-120 100 C 160 -60, 540 20, 660 230 C 780 440, 560 580, 300 560 C 40 540, -200 420, -120 100 Z" fill="#102f86" opacity="0.5"/>
+      <path d="M980 -80 C 1300 -40, 1580 140, 1520 430 C 1460 660, 1180 590, 1070 420 C 960 250, 850 0, 980 -80 Z" fill="#1a3fae" opacity="0.4"/>
+      <path d="M-140 660 C 120 540, 440 650, 540 880 C 640 1110, 380 1270, 130 1200 C -130 1130, -280 780, -140 660 Z" fill="#0c2672" opacity="0.5"/>
+      <path d="M950 780 C 1200 650, 1540 770, 1520 1040 C 1500 1290, 1170 1330, 1000 1160 C 850 1010, 770 880, 950 780 Z" fill="#12328f" opacity="0.38"/>
+      <path d="M520 520 C 700 470, 900 560, 880 760 C 860 960, 600 980, 500 820 C 420 690, 400 570, 520 520 Z" fill="#050d28" opacity="0.65"/>
+    </g>
+    <g filter="url(#w-ribbon)" fill="none" stroke-linecap="round">
+      <path d="M-40 360 C 220 520, 420 470, 600 330 C 760 210, 860 330, 920 520" stroke="#8aa5ff" stroke-width="24" opacity="0.4"/>
+      <path d="M700 140 C 820 300, 960 340, 1100 260 C 1240 180, 1360 260, 1440 360" stroke="#6f8dff" stroke-width="18" opacity="0.36"/>
+      <path d="M80 900 C 300 760, 520 900, 640 1060 C 760 1220, 980 1160, 1100 1000" stroke="#7a95ff" stroke-width="20" opacity="0.32"/>
+    </g>
+  </svg>
+</div>
 <div class="wrap">
   <header class="top">
     <a class="brand" href="#inicio">Mora<span>.</span></a>
@@ -390,11 +430,8 @@
                 <label for="tipo">Tipo de proyecto</label>
                 <select id="tipo" name="tipo" required>
                   <option value="" selected disabled>Elige una opción</option>
-                  <option>Documental de evento (boda, quinceaños, fiesta)</option>
-                  <option>Podcast o vlog</option>
-                  <option>Reel o TikTok</option>
-                  <option>Video para empresa</option>
-                  <option>Otro</option>
+                  <option>Video largo: documentales, podcasts, etc.</option>
+                  <option>Video corto: reels, TikTok, etc.</option>
                 </select>
               </div>
               <div class="field">
