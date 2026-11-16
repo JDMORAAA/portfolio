@@ -12,8 +12,9 @@ window.PORTFOLIO = {
     // Sin clave, el formulario abre el correo del visitante con el mensaje ya escrito.
     accessKey: "e7115c60-068b-4b5d-b589-4e003b7ab431",
     // Opcional: tu número de WhatsApp con código de país y solo dígitos (ejemplo: 584121234567).
-    // Si lo llenas, tras enviar el formulario aparece un botón para mandarte también el mensaje por WhatsApp.
-    whatsapp: "",
+    // Si lo llenas, aparece el botón verde "Contáctame directamente" junto al del formulario,
+    // y tras enviar el formulario otro botón para mandarte también el mensaje por WhatsApp.
+    whatsapp: "584124365551",
     // Correo usado solo cuando no hay clave. Puedes borrarlo cuando accessKey esté puesta.
     fallbackEmail: "jdavidmoraaa@gmail.com"
   },
