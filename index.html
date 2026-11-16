@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>J. David Mora · Editor de video</title>
-<meta name="description" content="Portafolio de J. David Mora, editor de video con 5 años de experiencia: documentales de eventos, podcasts, vlogs, reels y TikToks.">
+<meta name="description" content="Portafolio de J. David Mora, editor de video con más de 5 años de experiencia: documentales de eventos, podcasts, vlogs, reels y TikToks.">
 <meta property="og:title" content="J. David Mora · Editor de video">
 <meta property="og:description" content="Documentales de eventos, podcasts, vlogs, reels y TikToks.">
 <meta property="og:type" content="website">
@@ -200,15 +200,48 @@
   .clip-meta a:hover { text-decoration: underline; }
   .empty { color: var(--muted); }
 
-  /* Sobre mí */
-  .about { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 56px; }
+  /* Sobre mí (plegable) */
+  .about-box { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+  .about-box summary {
+    list-style: none; cursor: pointer; padding: 28px;
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 24px; align-items: center;
+  }
+  .about-box summary::-webkit-details-marker { display: none; }
+  .about-box summary h2 { margin: 0 0 4px; grid-column: 1; }
+  .about-box .sum-sub { grid-column: 1; color: var(--muted); font-size: 0.95rem; }
+  .about-box .chev {
+    grid-column: 2; grid-row: 1 / span 2; width: 40px; height: 40px;
+    border: 1px solid var(--line); border-radius: 50%; display: grid; place-items: center;
+  }
+  .about-box .chev::before {
+    content: ""; width: 9px; height: 9px;
+    border-right: 2px solid var(--fg); border-bottom: 2px solid var(--fg);
+    transform: translateY(-2px) rotate(45deg);
+  }
+  .about-box[open] .chev::before { transform: translateY(2px) rotate(-135deg); }
+  .about-box summary:hover .chev { border-color: var(--muted); }
+  .about-body { padding: 32px 28px 36px; border-top: 1px solid var(--line); }
+  .about { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 56px; align-items: start; }
   .about p { margin: 0 0 16px; color: var(--muted); max-width: 60ch; }
+  .about p:last-child { margin-bottom: 0; }
   .about p strong { color: var(--fg); font-weight: 600; }
-  .timeline { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line); }
-  .timeline li { padding: 0 0 28px 24px; position: relative; }
-  .timeline li:last-child { padding-bottom: 0; }
+
+  .photos { display: grid; gap: 16px; min-width: 0; }
+  .photos figure { margin: 0; min-width: 0; }
+  .photos img {
+    display: block; width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--line); object-fit: cover;
+  }
+  .photos .p1 img { aspect-ratio: 4 / 3; }
+  .photos .p2 img { aspect-ratio: 16 / 10; object-position: 50% 38%; }
+  .photos figcaption {
+    margin-top: 8px; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--muted);
+  }
+
+  .timeline { list-style: none; margin: 40px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  .timeline li { position: relative; padding-top: 18px; border-top: 1px solid var(--line); }
   .timeline li::before {
-    content: ""; position: absolute; left: -4px; top: 9px; width: 7px; height: 7px;
+    content: ""; position: absolute; left: 0; top: -4px; width: 7px; height: 7px;
     border-radius: 50%; background: var(--accent);
   }
   .timeline .when {
@@ -239,7 +272,10 @@
     background: #25d366; border-color: #25d366; color: #062b14;
   }
   .btn.wa:hover { background: #3be07c; border-color: #3be07c; }
-  .btn.wa svg { width: 18px; height: 18px; flex: none; fill: currentColor; }
+  .btn.wa::before {
+    content: ""; width: 22px; height: 22px; flex: none;
+    background: url("data:image/png;base64,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") center / contain no-repeat;
+  }
   .form-panel { margin-top: 28px; scroll-margin-top: 16px; }
   .form, .thanks {
     min-width: 0; padding: 28px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface);
@@ -280,12 +316,15 @@
   @media (max-width: 820px) {
     .hero { grid-template-columns: minmax(0, 1fr); gap: 40px; padding-block: 56px 64px; }
     .about { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+    .timeline { grid-template-columns: minmax(0, 1fr); gap: 20px; }
     section { padding-block: 56px; }
   }
 
   @media (max-width: 520px) {
     .row { grid-template-columns: minmax(0, 1fr); }
     .form, .thanks { padding: 20px; }
+    .about-box summary { padding: 20px; }
+    .about-body { padding: 24px 20px 28px; }
     .contact-actions .btn { flex: 1 1 100%; justify-content: center; text-align: center; }
   }
 </style>
@@ -315,7 +354,7 @@
   <header class="top">
     <a class="brand" href="#inicio">Mora<span>.</span></a>
     <nav aria-label="Secciones">
-      <a href="#proyectos">Proyectos</a>
+      <a href="#proyectos">Trabajos</a>
       <a href="#sobre-mi">Sobre mí</a>
       <a href="#servicios">Servicios</a>
       <a href="#contacto">Contacto</a>
@@ -325,51 +364,71 @@
   <main id="inicio">
     <div class="hero" id="hero">
       <div>
-        <p class="eyebrow">Editor de video · 5 años de experiencia</p>
+        <p class="eyebrow">Editor de video · Más de 5 años de experiencia</p>
         <h1>¡Transformemos tus videos en <span class="hl">Historias!</span></h1>
         <p class="lede">Soy J. David Mora. Transformo horas de grabación en contenido dinámico y cinematográfico: desde vlogs y podcasts para YouTube hasta reels, TikToks y documentales que conectan de verdad.</p>
         <div class="actions">
           <a class="btn primary open-form" href="#contacto">Cotizar un proyecto</a>
-          <a class="btn ghost" href="#proyectos">Ver proyectos</a>
+          <a class="btn ghost" href="#proyectos">Ver mis trabajos</a>
         </div>
       </div>
       <div id="reel"></div>
     </div>
 
     <section id="proyectos">
-      <h2>Proyectos</h2>
-      <p class="sec-intro">Una selección por tipo de trabajo. Toca un video para reproducirlo aquí mismo.</p>
+      <h2>Conoce mis trabajos</h2>
+      <p class="sec-intro">Estos videos son solo una muestra de los proyectos en los que he trabajado a lo largo de los años. Toca uno para reproducirlo aquí mismo.</p>
       <div id="grupos">
         <noscript><p class="empty">Activa JavaScript para ver los videos.</p></noscript>
       </div>
     </section>
 
     <section id="sobre-mi">
-      <div class="about">
-        <div>
-          <h2>Sobre mí</h2>
-          <p>Soy editor de video con <strong>5 años de experiencia</strong>. Mi base son los documentales de eventos: bodas, quinceaños y fiestas, donde cada historia se cuenta una sola vez y la edición tiene que respetar el momento.</p>
-          <p>Trabajé casi tres años dentro de una empresa, editando <strong>reels, TikToks</strong> y otras piezas cortas con entregas constantes. Hoy también edito <strong>podcasts y vlogs para YouTube</strong>, con cortes limpios y un ritmo que mantiene a la audiencia.</p>
-          <p>Si tienes material grabado y una idea de lo que quieres transmitir, puedo ayudarte a darle forma.</p>
+      <details class="about-box" id="sobre-detalle">
+        <summary>
+          <h2>Conoce quién soy</h2>
+          <span class="sum-sub">Mi historia, mi forma de trabajar y un poco más sobre mí.</span>
+          <span class="chev" aria-hidden="true"></span>
+        </summary>
+        <div class="about-body">
+          <div class="about">
+            <div>
+              <p>Soy J. David Mora, editor profesional desde hace más de <strong>5 años</strong>. Mi base son los documentales de eventos: bodas, quinceaños y fiestas, donde cada historia se cuenta una sola vez y la edición tiene que respetar el momento.</p>
+              <p>Trabajé casi tres años dentro de una empresa, editando <strong>reels, TikToks</strong> y otras piezas cortas con entregas constantes. Hoy también edito <strong>podcasts y vlogs para YouTube</strong>, con cortes limpios y un ritmo que mantiene a la audiencia.</p>
+              <p>Nací en <strong>Maracay, Venezuela</strong>. Soy un entusiasta del aprendizaje: si no sé cómo se hace algo, aprendo a hacerlo, y me gusta entender cómo funcionan las cosas. Siempre estoy dispuesto a mejorar mis habilidades y a salir adelante.</p>
+              <p>Fuera de la edición me gusta la naturaleza y los animales, escucho música de todos los géneros y soy amante de la buena comida.</p>
+              <p>Si tienes material grabado y una idea de lo que quieres transmitir, puedo ayudarte a darle forma.</p>
+            </div>
+            <div class="photos">
+              <figure class="p1">
+                <img src="mora-tovar.jpg" width="1000" height="750" loading="lazy" alt="J. David Mora sonriendo, con las montañas de la Colonia Tovar al fondo">
+                <figcaption>Colonia Tovar, Venezuela</figcaption>
+              </figure>
+              <figure class="p2">
+                <img src="mora-viaje.jpg" width="900" height="1200" loading="lazy" alt="Viaje en carro hacia la playa, con palmeras a través de la ventana">
+                <figcaption>De camino a la playa</figcaption>
+              </figure>
+            </div>
+          </div>
+          <ol class="timeline" aria-label="Trayectoria">
+            <li>
+              <span class="when">Hace más de 5 años</span>
+              <span class="what">Documentales de eventos</span>
+              <span class="detail">Bodas, quinceaños, fiestas</span>
+            </li>
+            <li>
+              <span class="when">Casi 3 años</span>
+              <span class="what">Editor en empresa</span>
+              <span class="detail">Reels, TikToks y piezas para redes</span>
+            </li>
+            <li>
+              <span class="when">Casi 1 año</span>
+              <span class="what">Podcasts y vlogs</span>
+              <span class="detail">Edición para canales de YouTube</span>
+            </li>
+          </ol>
         </div>
-        <ol class="timeline" aria-label="Trayectoria">
-          <li>
-            <span class="when">Hace 5 años</span>
-            <span class="what">Documentales de eventos</span>
-            <span class="detail">Bodas, quinceaños, fiestas</span>
-          </li>
-          <li>
-            <span class="when">Casi 3 años</span>
-            <span class="what">Editor en empresa</span>
-            <span class="detail">Reels, TikToks y piezas para redes</span>
-          </li>
-          <li>
-            <span class="when">Casi 1 año</span>
-            <span class="what">Podcasts y vlogs</span>
-            <span class="detail">Edición para canales de YouTube</span>
-          </li>
-        </ol>
-      </div>
+      </details>
     </section>
 
     <section id="servicios">
@@ -418,7 +477,6 @@
         <div class="contact-actions">
           <button class="btn primary" id="abrir-form" type="button" aria-expanded="false" aria-controls="form-panel">Cuéntame tu proyecto</button>
           <a class="btn wa" id="wa-directo" href="#contacto" target="_blank" rel="noopener" hidden>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H9.4L4.6 21.6A.6.6 0 0 1 3.6 21v-3H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/></svg>
             Contáctame directamente
           </a>
         </div>
@@ -564,6 +622,13 @@
       slot.remove();
       hero.classList.add('no-reel');
     }
+
+    // "Sobre mí" se despliega al entrar desde el menú o con #sobre-mi
+    var sobre = document.getElementById('sobre-detalle');
+    Array.prototype.forEach.call(document.querySelectorAll('a[href="#sobre-mi"]'), function (a) {
+      a.addEventListener('click', function () { sobre.open = true; });
+    });
+    if (location.hash === '#sobre-mi') sobre.open = true;
 
     // Formulario de contacto
     var cfg = data.contact || {};

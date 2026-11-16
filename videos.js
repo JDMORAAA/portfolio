@@ -24,7 +24,10 @@ window.PORTFOLIO = {
       title: "Documentales de eventos",
       note: "Bodas, quinceaños, fiestas",
       layout: "wide",
-      items: []
+      items: [
+        { id: "rbrUE2wKacE", title: "Boda · Montaje inicial" },
+        { id: "l8xUsPikmPc", title: "Boda · Montaje final" }
+      ]
     },
     {
       title: "Podcasts y vlogs",
