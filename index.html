@@ -189,6 +189,26 @@
   h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.25rem; margin: 0; }
   .group-head p { margin: 0; color: var(--muted); font-size: 0.875rem; }
 
+  /* Controles del carrusel (solo se ven en celular) */
+  .car-ctrl { display: none; align-items: center; gap: 8px; }
+  .car-ctrl button {
+    width: 40px; height: 40px; padding: 0; border-radius: 50%; cursor: pointer;
+    border: 1px solid var(--line); background: rgba(7, 9, 13, 0.55); color: var(--fg);
+    display: grid; place-items: center;
+  }
+  .car-ctrl button::before {
+    content: ""; width: 8px; height: 8px;
+    border-left: 2px solid currentColor; border-bottom: 2px solid currentColor;
+    transform: translateX(2px) rotate(45deg);
+  }
+  .car-ctrl button.next::before { transform: translateX(-2px) rotate(225deg); }
+  .car-ctrl button:hover:not(:disabled) { border-color: var(--muted); }
+  .car-ctrl button:disabled { opacity: 0.35; cursor: default; }
+  .car-count {
+    min-width: 4.4em; text-align: center; font-family: var(--font-mono);
+    font-size: 0.72rem; letter-spacing: 0.04em; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
   .grid { display: grid; gap: 20px; }
   .grid.wide { grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
   .grid.tall { grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr)); }
@@ -326,6 +346,24 @@
     .about-box summary { padding: 20px; }
     .about-body { padding: 24px 20px 28px; }
     .contact-actions .btn { flex: 1 1 100%; justify-content: center; text-align: center; }
+  }
+
+  /* Celular: cada categoría se desliza hacia los lados */
+  @media (max-width: 600px) {
+    .group { margin-bottom: 40px; }
+    .group-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 4px 12px; margin-bottom: 16px; }
+    .group-head h3 { grid-column: 1; grid-row: 1; }
+    .group-head p { grid-column: 1 / -1; grid-row: 2; }
+    .car-ctrl { display: flex; grid-column: 2; grid-row: 1; }
+    .grid.wide, .grid.tall {
+      display: flex; gap: 12px; overflow-x: auto;
+      scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+      margin-inline: -20px; padding-inline: 20px; scroll-padding-inline: 20px;
+      scrollbar-width: none; -webkit-overflow-scrolling: touch;
+    }
+    .grid.wide::-webkit-scrollbar, .grid.tall::-webkit-scrollbar { display: none; }
+    .grid.wide .clip { flex: 0 0 86%; scroll-snap-align: start; }
+    .grid.tall .clip { flex: 0 0 42%; scroll-snap-align: start; }
   }
 </style>
 </head>
@@ -597,8 +635,75 @@
       return wrap;
     }
 
-    // Grupos de proyectos (los grupos sin videos no se muestran)
+    // Grupos de proyectos (los grupos sin videos no se muestran).
+    // En celular cada grupo es un carrusel que se desliza hacia los lados.
     var host = document.getElementById('grupos');
+    var mq = window.matchMedia('(max-width: 600px)');
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var carousels = [];
+
+    function makeCarousel(grid, ctrl, prev, next, count, total, label) {
+      var raf = 0;
+
+      function metrics() {
+        var first = grid.children[0];
+        if (!first) return null;
+        var cs = getComputedStyle(grid);
+        var gap = parseFloat(cs.columnGap) || 0;
+        var pl = parseFloat(cs.paddingLeft) || 0;
+        var w = first.getBoundingClientRect().width;
+        return {
+          step: w + gap,
+          visible: Math.max(1, Math.floor((grid.clientWidth - pl + gap) / (w + gap))),
+          max: grid.scrollWidth - grid.clientWidth
+        };
+      }
+
+      function update() {
+        raf = 0;
+        var m = mq.matches ? metrics() : null;
+        if (!m) { ctrl.hidden = true; return; }
+        ctrl.hidden = m.max <= 2;
+        var left = grid.scrollLeft;
+        var cur = Math.round(left / m.step);
+        if (left >= m.max - 2) cur = total - m.visible;
+        cur = Math.max(0, Math.min(total - m.visible, cur));
+        var a = cur + 1;
+        var b = Math.min(total, cur + m.visible);
+        count.textContent = (b > a ? a + '\u2013' + b : a) + ' / ' + total;
+        prev.disabled = left <= 2;
+        next.disabled = left >= m.max - 2;
+      }
+
+      function go(dir) {
+        var m = metrics();
+        if (!m) return;
+        grid.scrollBy({ left: dir * m.step * m.visible, behavior: reduceMotion ? 'auto' : 'smooth' });
+      }
+
+      prev.addEventListener('click', function () { go(-1); });
+      next.addEventListener('click', function () { go(1); });
+      grid.addEventListener('scroll', function () {
+        if (!raf) raf = requestAnimationFrame(update);
+      }, { passive: true });
+
+      return {
+        refresh: function () {
+          if (mq.matches) {
+            grid.setAttribute('tabindex', '0');
+            grid.setAttribute('role', 'region');
+            grid.setAttribute('aria-label', label);
+          } else {
+            grid.removeAttribute('tabindex');
+            grid.removeAttribute('role');
+            grid.removeAttribute('aria-label');
+            grid.scrollLeft = 0;
+          }
+          update();
+        }
+      };
+    }
+
     (data.groups || []).forEach(function (g) {
       if (!g.items || !g.items.length) return;
       var tall = g.layout === 'tall';
@@ -606,12 +711,36 @@
       var head = el('div', 'group-head');
       head.appendChild(el('h3', '', g.title));
       if (g.note) head.appendChild(el('p', '', g.note));
+
+      var ctrl = el('div', 'car-ctrl');
+      ctrl.hidden = true;
+      var prev = el('button', 'prev');
+      prev.type = 'button';
+      prev.setAttribute('aria-label', 'Anterior: ' + g.title);
+      var count = el('span', 'car-count');
+      var next = el('button', 'next');
+      next.type = 'button';
+      next.setAttribute('aria-label', 'Siguiente: ' + g.title);
+      ctrl.appendChild(prev);
+      ctrl.appendChild(count);
+      ctrl.appendChild(next);
+      head.appendChild(ctrl);
       box.appendChild(head);
+
       var grid = el('div', 'grid ' + (tall ? 'tall' : 'wide'));
       g.items.forEach(function (it) { grid.appendChild(card(it, tall)); });
       box.appendChild(grid);
       host.appendChild(box);
+      carousels.push(makeCarousel(grid, ctrl, prev, next, count, g.items.length, g.title));
     });
+
+    function refreshCarousels() {
+      carousels.forEach(function (c) { c.refresh(); });
+    }
+    if (mq.addEventListener) { mq.addEventListener('change', refreshCarousels); }
+    else if (mq.addListener) { mq.addListener(refreshCarousels); }
+    window.addEventListener('resize', refreshCarousels);
+    refreshCarousels();
 
     // Reel de la portada (si no hay reel, la portada queda en una columna)
     var hero = document.getElementById('hero');

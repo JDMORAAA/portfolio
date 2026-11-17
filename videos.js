@@ -41,25 +41,25 @@ window.PORTFOLIO = {
     },
     {
       title: "Videos para empresas",
-      note: "Ander FX · canal de YouTube",
+      note: "Finance World Academy C.A. · canal de YouTube",
       layout: "wide",
       items: [
-        { id: "oOBx6Wwk-T4", title: "Presentación del canal · Ander FX" },
-        { id: "j1aTcXMauI0", title: "Testimonios de clientes · Ander FX" },
-        { id: "eRKg_ExIbNc", title: "Tutorial · Ander FX" }
+        { id: "oOBx6Wwk-T4", title: "Presentación del canal · Finance World Academy C.A." },
+        { id: "j1aTcXMauI0", title: "Testimonios de clientes · Finance World Academy C.A." },
+        { id: "eRKg_ExIbNc", title: "Tutorial · Finance World Academy C.A." }
       ]
     },
     {
-      title: "Reels y TikToks",
+      title: "Videos Cortos | Reels y TikToks",
       note: "Contenido vertical para marcas",
       layout: "tall",
       items: [
         { id: "Lj74CTGR7pg", title: "Inauguración · 1611 Bistro Bar" },
         { id: "hSeaGclAybQ", title: "Momentos controversiales · Facturando con la Yoyis" },
         { id: "WA3LDWF-bYM", title: "Review de producto" },
-        { id: "EQLs5QxdA58", title: "Tutorial en pantalla dividida" },
-        { id: "-BRzOwqhcFE", title: "Resumen de masterclass" },
-        { id: "T-_i093CikQ", title: "Formato Top" }
+        { id: "EQLs5QxdA58", title: "Pantalla Dividida · Finance World Academy C.A." },
+        { id: "-BRzOwqhcFE", title: "Masterclass · Finance World Academy C.A." },
+        { id: "T-_i093CikQ", title: "Formato Top · Ander FX" }
       ]
     }
   ]
