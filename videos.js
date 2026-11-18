@@ -2,6 +2,7 @@
 // Para agregar un video: añade { id: "ID_DE_YOUTUBE", title: "Título" } a su grupo.
 // El id es lo que va después de v= (o de /shorts/) en el enlace de YouTube.
 // Un grupo sin videos no se muestra en la página.
+// "note" es el subtítulo de la categoría y es opcional: si no lo pones, no aparece.
 window.PORTFOLIO = {
   // Reel principal de la portada. Cuando lo tengas: { id: "ID_DE_YOUTUBE", title: "Reel 2026" }
   reel: null,
@@ -22,16 +23,15 @@ window.PORTFOLIO = {
   groups: [
     {
       title: "Documentales de eventos",
-      note: "Bodas, quinceaños, fiestas",
       layout: "wide",
       items: [
+        { id: "-PW6KUbyuNM", title: "Quinceaños · Montaje inicial" },
         { id: "rbrUE2wKacE", title: "Boda · Montaje inicial" },
         { id: "l8xUsPikmPc", title: "Boda · Montaje final" }
       ]
     },
     {
-      title: "Podcasts y vlogs",
-      note: "Edición para canales de YouTube",
+      title: "Podcasts",
       layout: "wide",
       items: [
         { id: "XJr7-kFKiK4", title: "Podcast · Facturando con la Yoyis" },
@@ -41,21 +41,20 @@ window.PORTFOLIO = {
     },
     {
       title: "Videos para empresas",
-      note: "Finance World Academy C.A. · canal de YouTube",
       layout: "wide",
       items: [
         { id: "oOBx6Wwk-T4", title: "Presentación del canal · Finance World Academy C.A." },
-        { id: "j1aTcXMauI0", title: "Testimonios de clientes · Finance World Academy C.A." },
+        { id: "j1aTcXMauI0", title: "Testimonio Alumno · Finance World Academy C.A." },
         { id: "eRKg_ExIbNc", title: "Tutorial · Finance World Academy C.A." }
       ]
     },
     {
       title: "Videos Cortos | Reels y TikToks",
-      note: "Contenido vertical para marcas",
+      note: "Contenido vertical",
       layout: "tall",
       items: [
         { id: "Lj74CTGR7pg", title: "Inauguración · 1611 Bistro Bar" },
-        { id: "hSeaGclAybQ", title: "Momentos controversiales · Facturando con la Yoyis" },
+        { id: "hSeaGclAybQ", title: "Reel de Episodio · Facturando con la Yoyis" },
         { id: "WA3LDWF-bYM", title: "Review de producto" },
         { id: "EQLs5QxdA58", title: "Pantalla Dividida · Finance World Academy C.A." },
         { id: "-BRzOwqhcFE", title: "Masterclass · Finance World Academy C.A." },

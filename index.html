@@ -406,8 +406,9 @@
         <h1>¡Transformemos tus videos en <span class="hl">Historias!</span></h1>
         <p class="lede">Soy J. David Mora. Transformo horas de grabación en contenido dinámico y cinematográfico: desde vlogs y podcasts para YouTube hasta reels, TikToks y documentales que conectan de verdad.</p>
         <div class="actions">
-          <a class="btn primary open-form" href="#contacto">Cotizar un proyecto</a>
+          <a class="btn primary open-form" href="#contacto">Cotizar</a>
           <a class="btn ghost" href="#proyectos">Ver mis trabajos</a>
+          <a class="btn wa" id="wa-hero" href="#contacto" target="_blank" rel="noopener" hidden>Contáctame</a>
         </div>
       </div>
       <div id="reel"></div>
@@ -773,9 +774,13 @@
 
     // Botón verde: abre WhatsApp con un mensaje de saludo ya escrito
     if (waNum) {
-      waDirecto.href = 'https://wa.me/' + waNum + '?text=' +
+      var saludo = 'https://wa.me/' + waNum + '?text=' +
         encodeURIComponent('Hola Mora, vi tu portafolio y me gustaría hablar sobre un proyecto.');
-      waDirecto.hidden = false;
+      [waDirecto, document.getElementById('wa-hero')].forEach(function (a) {
+        if (!a) return;
+        a.href = saludo;
+        a.hidden = false;
+      });
     }
 
     // El formulario aparece solo al pulsar el botón
@@ -800,7 +805,7 @@
       setForm(panel.hidden, true);
     });
 
-    // El botón "Cotizar un proyecto" de la portada también abre el formulario
+    // El botón "Cotizar" de la portada también abre el formulario
     Array.prototype.forEach.call(document.querySelectorAll('.open-form'), function (a) {
       a.addEventListener('click', function () { setForm(true, false); });
     });
