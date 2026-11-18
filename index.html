@@ -106,7 +106,7 @@
   }
   h1 {
     font-family: var(--font-display); font-weight: 700;
-    font-size: clamp(2.6rem, 8vw, 5.2rem); line-height: 1; letter-spacing: -0.03em;
+    font-size: min(clamp(2.6rem, 8vw, 5.2rem), calc((100vw - 40px) / 7.8)); line-height: 1; letter-spacing: -0.03em;
     margin: 0 0 28px; text-wrap: balance;
   }
   h1 .hl { color: var(--accent-text); }
@@ -120,6 +120,7 @@
   .btn.primary:hover { background: #4170ff; }
   .btn.ghost:hover { border-color: var(--muted); }
   .btn:disabled { opacity: 0.65; cursor: progress; }
+  .m-only { display: none; }
 
   /* Marcos de video */
   .frame {
@@ -365,6 +366,23 @@
     .grid.wide .clip { flex: 0 0 86%; scroll-snap-align: start; }
     .grid.tall .clip { flex: 0 0 42%; scroll-snap-align: start; }
   }
+
+  /* Celular angosto: los tres botones de la portada caben en una sola línea */
+  @media (max-width: 480px) {
+    .hero .actions { gap: 6px; }
+    .hero .actions .btn {
+      flex: 1 1 auto; justify-content: center; text-align: center; white-space: nowrap;
+      padding: 12px 10px; font-size: 0.82rem;
+    }
+    .hero .actions .btn.wa { gap: 6px; }
+    .hero .actions .btn.wa::before { width: 16px; height: 16px; }
+    .d-only { display: none; }
+    .m-only { display: inline; }
+  }
+
+  @media (max-width: 340px) {
+    .group-head h3 { font-size: 1.05rem; }
+  }
 </style>
 </head>
 <body>
@@ -407,7 +425,7 @@
         <p class="lede">Soy J. David Mora. Transformo horas de grabación en contenido dinámico y cinematográfico: desde vlogs y podcasts para YouTube hasta reels, TikToks y documentales que conectan de verdad.</p>
         <div class="actions">
           <a class="btn primary open-form" href="#contacto">Cotizar</a>
-          <a class="btn ghost" href="#proyectos">Ver mis trabajos</a>
+          <a class="btn ghost" href="#proyectos"><span class="d-only">Ver mis trabajos</span><span class="m-only">Mis trabajos</span></a>
           <a class="btn wa" id="wa-hero" href="#contacto" target="_blank" rel="noopener" hidden>Contáctame</a>
         </div>
       </div>
@@ -481,12 +499,12 @@
         </div>
         <div class="service">
           <h3>Podcasts y vlogs</h3>
-          <p>Cortes, ritmo, audio limpio y rotulación para tu canal de YouTube.</p>
+          <p>Cortes, ritmo, audio limpio y rotulación para tu canal.</p>
           <span class="fmt-line">16:9 · episodios</span>
         </div>
         <div class="service">
           <h3>Contenido corto</h3>
-          <p>Reels y TikToks pensados para retener desde el primer segundo.</p>
+          <p>Reels y TikToks pensados para retener desde el primer segundo. También videos para estados e historias, como los de WhatsApp o Instagram.</p>
           <span class="fmt-line">9:16 · formato vertical</span>
         </div>
       </div>
@@ -496,7 +514,7 @@
         <div class="services">
           <div class="service">
             <h3>Proyectos individuales</h3>
-            <p>Un video puntual, como el documental de un evento, un episodio de podcast o un reel. Me cuentas qué necesitas y trabajamos solo en eso.</p>
+            <p>Un video puntual, como el documental de un evento, un episodio de podcast o un video corto. Me cuentas qué necesitas y trabajamos solo en eso.</p>
             <span class="fmt-line">Un video · una entrega</span>
           </div>
           <div class="service">
